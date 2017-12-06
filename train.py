@@ -5,17 +5,6 @@ import numpy as np
 from PIL import Image
 from cntk import load_model
 from easydict import EasyDict as edict
-    
-def get_classes_description(model_file_path, classes_count):
-    model_dir = path.dirname(model_file_path)
-    classes_names = {}
-    model_desc_file_path = path.join(model_dir, 'class_map.txt')
-    if not path.exists(model_desc_file_path):
-        # use default parameter names:
-        return [ "class_{}".format(i) for i in range(classes_count)]
-    with open(model_desc_file_path) as handle:
-        class_map = handle.read().strip().split('\n')
-        return [class_name.split('\t')[0] for class_name in class_map]
 
 if __name__ == "__main__":
     import argparse
@@ -27,28 +16,15 @@ if __name__ == "__main__":
     parser.add_argument('--tagged-images', type=str, metavar='<path>',
                         help='Path to image file or to a directory containing tagged image(s) in jpg format', required=True)
     
-    parser.add_argument('--output', type=str, metavar='<directory path>',
-                        help='Path to output directory', required=False)
-
-    parser.add_argument('--model-path', type=str, metavar='<path>',
-                        help='Path to pretrained model', required=False)
-
     parser.add_argument('--num-train', type=int, metavar='<integer>',
                         help='Number of training images. For example: 200',
                         required=True)
 
-    parser.add_argument('--num-test', type=int, metavar='<integer>',
-                        help='Number of testing images. For example: 5',required=True)
-
-    parser.add_argument('--conf-thresh', type=float, metavar='<float>',
-                        help='Enter a confidence threshold to draw bounding boxes on objects. For example 0.82', required=False)
-
-    parser.add_argument('--json-output', type=str, metavar='<file path>',
-                        help='Path to output JSON file', required=False)
+    parser.add_argument('--num-epochs', type=int, metavar='<integer>',
+                        help='Number of epochs to run training.', required=False)
 
     args = parser.parse_args()
 
-#    from FasterRCNN.FasterRCNN_train import FasterRCNN_Trainer
     from utils.config_helpers import merge_configs
     import utils.od_utils as od
 
@@ -91,14 +67,14 @@ __C.DATA.TRAIN_ROI_FILE = \"train_roi_file.txt\"
 __C.DATA.TEST_MAP_FILE = \"test_img_file.txt\"
 __C.DATA.TEST_ROI_FILE = \"test_roi_file.txt\"
 __C.DATA.NUM_TRAIN_IMAGES = %s
-__C.DATA.NUM_TEST_IMAGES = %s
+__C.DATA.NUM_TEST_IMAGES = 0
 __C.DATA.PROPOSAL_LAYER_SCALES = [4, 8, 12]
 __C.roi_min_side_rel = 0.04
 __C.roi_max_side_rel = 0.4
 __C.roi_min_area_rel = 2 * __C.roi_min_side_rel * __C.roi_min_side_rel
 __C.roi_max_area_rel = 0.33 * __C.roi_max_side_rel * __C.roi_max_side_rel
 __C.roi_max_aspect_ratio = 4.0
-""" % (args.tagged_images, args.num_train, args.num_test))
+""" % (args.tagged_images, args.num_train))
 
     create_custom_config()
 
@@ -106,17 +82,15 @@ __C.roi_max_aspect_ratio = 4.0
         print("Running training")
         base_folder = os.path.dirname(os.path.abspath(__file__))
         sys.path.append(os.path.join(base_folder, "FasterRCNN"))
-        from cntk import load_model
         from run_faster_rcnn import get_configuration
         from FasterRCNN_train import prepare, train_faster_rcnn, store_eval_model_with_native_udf
-        from FasterRCNN_eval import compute_test_set_aps, FasterRCNN_Evaluator
         cfg = get_configuration()
         prepare(cfg, False)
-        
-        if not (args.model_path is None):
-            trained_model = load_model(args.model_path)
-            eval_results = compute_test_set_aps(trained_model, cfg)
+        cfg["CNTK"].MAKE_MODE = False
+        if args.num_epochs is None:
+            cfg["CNTK"].E2E_MAX_EPOCHS = 20
         else:
-            trained_model = train_faster_rcnn(cfg)
-    
+            cfg["CNTK"].E2E_MAX_EPOCHS = args.num_epochs
+        trained_model = train_faster_rcnn(cfg)
+           
     run_faster_rcnn() 
