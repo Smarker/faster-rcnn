@@ -97,7 +97,6 @@ __C.roi_max_aspect_ratio = 4.0
             cfg["CNTK"].E2E_MAX_EPOCHS = 20
         else:
             cfg["CNTK"].E2E_MAX_EPOCHS = args.num_epochs
-        print(cfg)
         trained_model = train_faster_rcnn(cfg)
            
     run_faster_rcnn() 
