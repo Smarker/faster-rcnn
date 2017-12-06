@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 from cntk import load_model
 from easydict import EasyDict as edict
-
+    
 if __name__ == "__main__":
     import argparse
     import os
@@ -60,7 +60,7 @@ __C = edict()
 __C.DATA = edict()
 cfg = __C
 __C.DATA.DATASET = \"CustomImages\"
-__C.DATA.MAP_FILE_PATH = %s
+__C.DATA.MAP_FILE_PATH = \"%s\"
 __C.DATA.CLASS_MAP_FILE = \"class_map.txt\"
 __C.DATA.TRAIN_MAP_FILE = \"train_img_file.txt\"
 __C.DATA.TRAIN_ROI_FILE = \"train_roi_file.txt\"
@@ -78,12 +78,18 @@ __C.roi_max_aspect_ratio = 4.0
 
     create_custom_config()
 
+    def get_configuration():
+        from utils.config_helpers import merge_configs
+        from FasterRCNN_config import cfg as detector_cfg
+        from utils.configs.AlexNet_config import cfg as network_cfg
+        from utils.configs.custom_image_config import cfg as dataset_cfg
+        return merge_configs([detector_cfg, network_cfg, dataset_cfg])
+
     def run_faster_rcnn():
         print("Running training")
         base_folder = os.path.dirname(os.path.abspath(__file__))
         sys.path.append(os.path.join(base_folder, "FasterRCNN"))
-        from run_faster_rcnn import get_configuration
-        from FasterRCNN_train import prepare, train_faster_rcnn, store_eval_model_with_native_udf
+        from FasterRCNN_train import prepare, train_faster_rcnn
         cfg = get_configuration()
         prepare(cfg, False)
         cfg["CNTK"].MAKE_MODE = False
@@ -91,6 +97,7 @@ __C.roi_max_aspect_ratio = 4.0
             cfg["CNTK"].E2E_MAX_EPOCHS = 20
         else:
             cfg["CNTK"].E2E_MAX_EPOCHS = args.num_epochs
+        print(cfg)
         trained_model = train_faster_rcnn(cfg)
            
     run_faster_rcnn() 
