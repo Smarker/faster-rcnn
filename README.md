@@ -4,7 +4,7 @@ These script removes a lot of the manual edits needed for the config files, down
 
 You can use docker to [correctly set up CNTK](https://github.com/jcjimenez/CNTK-docker/blob/master/ubuntu-14.04/version_2/cpu/runtime/python-3/Dockerfile) and then place `train.py` and `predict.py` in `/cntk/Examples/Images/Detection`.
 
-| tag name                  | value expected      |
+| tag                       | value expected      |
 | --------------------------| --------------------|
 | tagged-images             | Provide a path to the directory containing your custom images prepared for CNTK object detection. The directory should contain information formatted as described [here](https://docs.microsoft.com/en-us/cognitive-toolkit/Object-Detection-using-Fast-R-CNN#train-on-your-own-data). I recommend using the [VoTT tool](https://github.com/Microsoft/VoTT) to create the formatted directory. |
 | num-train                 | The number of training images used to train the model. |
