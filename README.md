@@ -11,7 +11,7 @@ You can use docker to [correctly set up CNTK](https://github.com/jcjimenez/CNTK-
 | num-epochs                | The number of `epochs` used to train the model. One `epoch` is one complete training cycle on the training set. |
 | num-test                  | The number images to test. |
 | model-path                | The path to your trained model. To get a trained model, run `train.py`. The training script will output the directory where your trained model is stored. Also, you can look at the model path below, since that is the expected path where your model will reside when you run the training. |
-| conf-threshold            | The `confidence threshold` used to determine when bounding boxes around detected objects are drawn. A confidence threshold of `0` will draw all bounding boxes determined by CNTK. A threshold of `1` will only draw a bounding box around the exact location you had originally drawn a bounding box, i.e. you trained and tested on the same image. Provide a `float` falling between 0 and 1. |
+| conf-threshold            | The `confidence threshold` used to determine when bounding boxes around detected objects are drawn. A confidence threshold of `0` will draw all bounding boxes determined by CNTK. A threshold of `1` will only draw a bounding box around the exact location you had originally drawn a bounding box, i.e. you trained and tested on the same image. Provide a `float` falling between 0 and 1. The `default` confidence theshold is `0`. |
 
 ## Training
 ```
@@ -29,3 +29,8 @@ python predict.py
   --model-path /cntk/Examples/Image/Detection/FasterRCNN/Output/faster_rcnn_eval_AlexNet_e2e.model
   [--conf-threshold 0.82]
 ```
+
+After you run your predictions, `/cntk/Examples/Image/Detection/FasterRCNN/Output/` will contain two new items: 
+
+* CustomImages directory - contains custom images with bounding boxes drawn on detected objects
+* custom_images_output.json - json output of `bounding boxes`, `confidence levels`, and `class names` for each image
