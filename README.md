@@ -21,6 +21,11 @@ python train.py
   [--num-epochs 3]
 ```
 
+### Training Output
+
+After you run training, `/cntk/Examples/Image/Detection/FasterRCNN/Output/` will contain one new item:
+* `faster_rcnn_eval_AlexNet_e2e.model` - trained model used as input for predictions
+
 ## Predictions
 ```
 python predict.py 
