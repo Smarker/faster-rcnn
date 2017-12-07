@@ -30,7 +30,8 @@ python predict.py
   [--conf-threshold 0.82]
 ```
 
+### Prediction Output
 After you run your predictions, `/cntk/Examples/Image/Detection/FasterRCNN/Output/` will contain two new items: 
 
-* CustomImages directory - contains custom images with bounding boxes drawn on detected objects
-* custom_images_output.json - json output of `bounding boxes`, `confidence levels`, and `class names` for each image
+* `CustomImages directory` - contains custom images with bounding boxes drawn on detected objects
+* `custom_images_output.json` - json output of `bounding boxes`, `confidence levels`, and `class names` for each image
