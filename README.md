@@ -27,15 +27,7 @@ Set up your custom image directory in the [format required by CNTK](https://docs
  └── bz7mfvk1etwl0rzofewu.jpg
 ```
 
-## Training
-```
-python train.py 
-  --tagged-images /CustomImages
-  --num-train 200 
-  [--num-epochs 3]
-```
-
-### Training and Prediction Parameters
+## Training and Prediction Parameters
 
 | tag                       | value expected      |
 | --------------------------| --------------------|
@@ -45,6 +37,14 @@ python train.py
 | num-test                  | The number images to test. |
 | model-path                | The path to your trained model. To get a trained model, run `train.py`. The training script will output the directory where your trained model is stored. Also, you can look at the model path below, since that is the expected path where your model will reside when you run the training. |
 | conf-threshold            | The `confidence threshold` used to determine when bounding boxes around detected objects are drawn. A confidence threshold of `0` will draw all bounding boxes determined by CNTK. A threshold of `1` will only draw a bounding box around the exact location you had originally drawn a bounding box, i.e. you trained and tested on the same image. Provide a `float` falling between 0 and 1. The `default` confidence theshold is `0`. |
+
+## Training
+```
+python train.py 
+  --tagged-images /CustomImages
+  --num-train 200 
+  [--num-epochs 3]
+```
 
 ### Training Output
 
@@ -78,13 +78,18 @@ Contains all test images, whether an object was detected in them or not.
     "/Reverb/labelled-guitars/testImages/adfvzfswiuv0a1erna5k.jpg": {
       "class": "body",
       "bounding_boxes": [
-        {"confidence_level": "0.536132", "bounding_box": {"x1": 317, "x2": 799, "y1": 65, "y2": 493}}, {"confidence_level": "0.632784", "bounding_box": {"x1": 0, "x2": 389, "y1": 167, "y2": 507}}, {"confidence_level": "0.767789", "bounding_box": {"x1": 0, "x2": 799, "y1": 102, "y2": 595}}, {"confidence_level": "0.588904", "bounding_box": {"x1": 527, "x2": 780, "y1": 96, "y2": 579}}, {"confidence_level": "0.743675", "bounding_box": {"x1": 0, "x2": 512, "y1": 196, "y2": 718}}
+        {"confidence_level": "0.536132", "bounding_box": {"x1": 317, "x2": 799, "y1": 65, "y2": 493}},
+        {"confidence_level": "0.632784", "bounding_box": {"x1": 0, "x2": 389, "y1": 167, "y2": 507}},
+        {"confidence_level": "0.767789", "bounding_box": {"x1": 0, "x2": 799, "y1": 102, "y2": 595}},
+        {"confidence_level": "0.588904", "bounding_box": {"x1": 527, "x2": 780, "y1": 96, "y2": 579}},
+        {"confidence_level": "0.743675", "bounding_box": {"x1": 0, "x2": 512, "y1": 196, "y2": 718}}
       ]
     }, 
     "/Reverb/labelled-guitars/testImages/aayjfcuulg99o3zpctux.jpg": {
       "class": "body", 
       "bounding_boxes": [
-        {"confidence_level": "0.872948", "bounding_box": {"x1": 79, "x2": 582, "y1": 136, "y2": 764}}, {"confidence_level": "0.629768", "bounding_box": {"x1": 158, "x2": 594, "y1": 180, "y2": 552}}
+        {"confidence_level": "0.872948", "bounding_box": {"x1": 79, "x2": 582, "y1": 136, "y2": 764}},
+        {"confidence_level": "0.629768", "bounding_box": {"x1": 158, "x2": 594, "y1": 180, "y2": 552}}
       ]
     },
     "/Reverb/labelled-guitars/testImages/caaqxk85v3izwweqvbsi.jpg": {
