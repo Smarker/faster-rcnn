@@ -36,7 +36,7 @@ Set up your custom image directory in the [format required by CNTK](https://docs
 | num-epochs                | The number of `epochs` used to train the model. One `epoch` is one complete training cycle on the training set. |
 | num-test                  | The number images to test. |
 | model-path                | The path to your trained model. To get a trained model, run `train.py`. The training script will output the directory where your trained model is stored. Also, you can look at the model path below, since that is the expected path where your model will reside when you run the training. |
-| conf-threshold            | The `confidence threshold` used to determine when bounding boxes around detected objects are drawn. A confidence threshold of `0` will draw all bounding boxes determined by CNTK. A threshold of `1` will only draw a bounding box around the exact location you had originally drawn a bounding box, i.e. you trained and tested on the same image. Provide a `float` falling between 0 and 1. The `default` confidence theshold is `0`. |
+| conf-threshold            | The `confidence threshold` used to determine when bounding boxes around detected objects are drawn. A confidence threshold of `0` will draw all bounding boxes determined by CNTK. A threshold of `1` will only draw a bounding box around the exact location you had originally drawn a bounding box, i.e. you trained and tested on the same image. Provide a `float` falling between `0` and `1`. The `default` confidence theshold is `0`. |
 
 ## Training
 ```
