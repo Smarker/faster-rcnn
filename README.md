@@ -66,10 +66,6 @@ After you run your predictions, `/cntk/Examples/Image/Detection/FasterRCNN/Outpu
 * `CustomImages directory` - contains custom images with bounding boxes drawn on detected objects
 * `custom_images_output.json` - json output of `bounding boxes`, `confidence levels`, and `class names` for each image
 
-#### CustomImages Directory in Output Folder
-
-Contains all test images, whether an object was detected in them or not.
-
 #### custom_images_output.json
 
 ```
