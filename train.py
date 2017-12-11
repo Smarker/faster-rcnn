@@ -13,6 +13,9 @@ if __name__ == "__main__":
     start = time.time()
     parser = argparse.ArgumentParser(description='FRCNN Training')
     
+    parser.add_argument('--gpu', type=int, metavar='<integer>', required=False, 
+                        help='Specify 1 to use gpu for training.')
+
     parser.add_argument('--tagged-images', type=str, metavar='<path>',
                         help='Path to image file or to a directory containing tagged image(s) in jpg format', required=True)
     
@@ -92,11 +95,17 @@ __C.roi_max_aspect_ratio = 4.0
         from FasterRCNN_train import prepare, train_faster_rcnn
         cfg = get_configuration()
         prepare(cfg, False)
+        
         cfg["CNTK"].MAKE_MODE = False
-        if args.num_epochs is None:
-            cfg["CNTK"].E2E_MAX_EPOCHS = 20
+        
+        if args.gpu is 1:
+            cfg["CNTK"].USE_GPU_NMS = True
         else:
+            cfg["CNTK"].USE_GPU_NMS = False
+
+        if not (args.num_epochs is None):
             cfg["CNTK"].E2E_MAX_EPOCHS = args.num_epochs
+        
         trained_model = train_faster_rcnn(cfg)
            
     run_faster_rcnn() 

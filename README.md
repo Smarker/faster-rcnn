@@ -31,6 +31,7 @@ Set up your custom image directory in the [format required by CNTK](https://docs
 
 | tag                       | value expected      |
 | --------------------------| --------------------|
+| gpu                       | To use `gpu` in either training or prediction, specify `1`. Otherwise, `cpu` will be used. |
 | tagged-images             | Provide a path to the directory containing your custom images prepared for CNTK object detection. The directory should contain information formatted as described [here](https://docs.microsoft.com/en-us/cognitive-toolkit/Object-Detection-using-Fast-R-CNN#train-on-your-own-data). I recommend using the [VoTT tool](https://github.com/Microsoft/VoTT) to create the formatted directory. |
 | num-train                 | The number of training images used to train the model. |
 | num-epochs                | The number of `epochs` used to train the model. One `epoch` is one complete training cycle on the training set. |
@@ -40,7 +41,8 @@ Set up your custom image directory in the [format required by CNTK](https://docs
 
 ## Training
 ```
-python train.py 
+python train.py
+  [--gpu 1] 
   --tagged-images /CustomImages
   --num-train 200 
   [--num-epochs 3]
@@ -53,7 +55,8 @@ After you run training, `/cntk/Examples/Image/Detection/FasterRCNN/Output/` will
 
 ## Predictions
 ```
-python predict.py 
+python predict.py
+  [--gpu 1] 
   --tagged-images /CustomImages 
   --num-test 5
   --model-path /cntk/Examples/Image/Detection/FasterRCNN/Output/faster_rcnn_eval_AlexNet_e2e.model

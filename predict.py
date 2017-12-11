@@ -12,6 +12,9 @@ if __name__ == "__main__":
     import time
     start = time.time()
     parser = argparse.ArgumentParser(description='FRCNN Training')
+
+    parser.add_argument('--gpu', type=int, metavar='<integer>',
+                        help='Specify 1 to use gpu in prediction.', required=False)
     
     parser.add_argument('--tagged-images', type=str, metavar='<path>',
                         help='Path to image file or to a directory containing tagged image(s) in jpg format', required=True)
@@ -203,6 +206,10 @@ if __name__ == "__main__":
         cfg["DATA"].NUM_TEST_IMAGES = args.num_test
         cfg["CNTK"].MAKE_MODE = True
         cfg["CNTK"].VISUALIZE_RESULTS = True
+        if args.gpu:
+            cfg["CNTK"].USE_GPU_NMS = True
+        else:
+            cfg["CNTK"].USE_GPU_NMS = False
         if not (args.conf_threshold is None):
             cfg.RESULTS_NMS_CONF_THRESHOLD = args.conf_threshold
         
