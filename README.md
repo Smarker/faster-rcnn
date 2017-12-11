@@ -2,7 +2,7 @@
 
 These script removes a lot of the manual edits needed for the config files, downloading of models, and setup of annotations necessary to run the [CNTK detection example](https://github.com/Microsoft/CNTK/tree/master/Examples/Image/Detection/FasterRCNN).
 
-You can use docker to [set up CNTK](https://github.com/jcjimenez/CNTK-docker/blob/master/ubuntu-14.04/version_2/cpu/runtime/python-3/Dockerfile) and then place `train.py` and `predict.py` in `/cntk/Examples/Images/Detection`.
+You can use the CNTK dockerfile located [here](https://github.com/CatalystCode/CNTK-faster-rcnn) and then place `train.py` and `predict.py` in `/cntk/Examples/Images/Detection`.
 
 ## Before Training
 
